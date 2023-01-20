@@ -2,14 +2,14 @@
   import moves from "../assets/moves.json"
   import Move from "../lib/Move.svelte"
 
-  export let search;
+  export let search = ""
 
-  const uselessChars = [' ', ',', '/', '+']
+  const uselessChars = [" ", ",", "/", "+"]
 
   function filterMove(str) {
     str = str.toLowerCase()
-    uselessChars.forEach(char => {
-      str = str.replaceAll(char, '')
+    uselessChars.forEach((char) => {
+      str = str.replaceAll(char, "")
     })
     return str
   }
@@ -24,25 +24,22 @@
       <Move move={moves[i]} />
     {/each}
 
-  <!-- Character only -->
+    <!-- Either character or move -->
   {:else if search.split(" ").length <= 1}
     {#each moves as move}
-      {#if move["C"]
-        .toLowerCase()
-        .includes(search.toLowerCase()) || filterMove(move["M"].toLowerCase()).includes(search.toLowerCase())}
+      {#if move["C"].toLowerCase()          .includes(filterMove(search)) ||
+         filterMove(move["M"].toLowerCase()).includes(filterMove(search))}
         <Move {move} />
       {/if}
     {/each}
 
-  <!-- Character and move -->
+    <!-- Character and move -->
   {:else}
     {#each moves as move}
-      {#if move["C"]
-        .toLowerCase()
-        .includes(search.split(" ")[0].toLowerCase())}
+      {#if move["C"].toLowerCase().includes(search.split(" ")[0].toLowerCase())}
         {#if filterMove(move["M"])
           .toLowerCase()
-          .includes(search.split(" ").slice(1).join())}
+          .includes(filterMove(search.split(" ").slice(1).join()))}
           <Move {move} />
         {/if}
       {/if}

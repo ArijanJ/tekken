@@ -1,77 +1,84 @@
 <script>
-  import { onMount } from "svelte";
+  import { onMount } from "svelte"
 
-  export let move;
-  let bg;
+  export let move
+  let bg
 
-  let gifOpen = false;
+  let gifOpen = false
 
   onMount(() => {
     if (move["G"] == "None") {
-      bg.style.backgroundColor = "#24283b";
-      bg.style.cursor = "not-allowed";
+      bg.style.backgroundColor = "#24283b"
+      bg.style.cursor = "not-allowed"
     }
-  });
+  })
 
   function showgif() {
-    if (move["G"] == "None") return;
+    if (move["G"] == "None") return
     if (gifOpen) {
-      gifOpen = false;
-      removeGif();
+      gifOpen = false
+      removeGif()
     }
 
-    gifOpen = true;
+    gifOpen = true
 
-    let div = document.createElement("div");
+    let div = document.createElement("div")
 
-    div.style.position = "absolute";
-    let rect = bg.getBoundingClientRect();
+    div.style.position = "absolute"
+    let rect = bg.getBoundingClientRect()
 
-    div.style.top = rect.bottom + window.scrollY + "px";
-    div.style.left = rect.left + "px";
+    div.style.top = rect.bottom + window.scrollY + "px"
+    div.style.left = rect.left + "px"
 
-    div.style.zIndex = "9999";
-    div.style.overflow = "hidden";
-    let iframe = document.createElement("iframe");
-    iframe.style.width = +bg.offsetWidth + "px";
+    div.style.zIndex = "9999"
+    div.style.overflow = "hidden"
+    let iframe = document.createElement("iframe")
+    iframe.style.width = +bg.offsetWidth + "px"
     iframe.style.height =
-      (bg.offsetWidth / 16) * 9 + 44 /* damn you gfycat banner */ + "px";
+      (bg.offsetWidth / 16) * 9 + 44 /* damn you gfycat banner */ + "px"
 
+    // div.style.padding = "8px"
+    // div.style.borderRadius = "15px"
+    // div.style.backgroundColor = "#24283b"
+    
     if (move["G"].includes("gfycat"))
       iframe.src = move["G"]
         .replace(".com/", ".com/ifr/")
-        .replace(".gif", "?controls=0?hd=0");
-    else iframe.src = move["G"];
+        .replace(".gif", "?controls=0?hd=0")
+    else iframe.src = move["G"]
+
+    // TODO: Make sense of these events
 
     function removeGif() {
-      div.remove();
-      document.removeEventListener("click", clickHandler);
-      return;
+      div.remove()
+      document.removeEventListener("click", clickHandler)
+      return
     }
 
     function escapeHandler() {
-      removeGif();
-      removeEventListener("keydown", this); // Does this even work?
-      return;
+      removeGif()
+      removeEventListener("keydown", this) // Does this even work?
+      return
     }
-    document.addEventListener("keydown", escapeHandler);
+    document.addEventListener("keydown", escapeHandler)
 
     function clickHandler() {
-      removeGif();
-      removeEventListener("click", this);
+      removeGif()
+      removeEventListener("click", this)
     }
     setTimeout(() => {
-      document.addEventListener("click", clickHandler);
-    }, 500);
+      document.addEventListener("click", clickHandler)
+    }, 500)
 
-    div.appendChild(iframe);
+    div.appendChild(iframe)
 
-    document.body.appendChild(div);
+    document.body.appendChild(div)
   }
 </script>
 
 <div bind:this={bg} class="move" on:click={showgif} on:keydown>
   <div style="flex: 1">
+    <!-- Can you believe this guy hard-coded all these colors in? What a lazy bum... -->
     <div style="color: #e0af68;">
       {move["C"].trim()}
     </div>
