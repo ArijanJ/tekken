@@ -6,3 +6,5 @@ It requires a large JSON file to feed it Tekken 7 moves (`/src/assets/moves.json
 This was my introduction to Svelte, and even though the app *(somewhat)* works, I still have heaps to learn about it, and in the future SvelteKit.
 
 An online version is available at [arijanj.github.io/tekken](https://arijanj.github.io/tekken/).
+
+![](https://i.imgur.com/tgkzjX4.png)
