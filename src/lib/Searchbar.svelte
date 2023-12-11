@@ -2,7 +2,7 @@
   export let currsearch = "";
 </script>
 
-<div style="width: 97%">
+<div style="">
   <input
     bind:value={currsearch}
     type="text"

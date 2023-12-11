@@ -24,16 +24,16 @@
       <Move move={moves[i]} />
     {/each}
 
-    <!-- Either character or move -->
+  <!-- Either character or move -->
   {:else if search.split(" ").length <= 1}
     {#each moves as move}
-      {#if move["C"].toLowerCase()          .includes(filterMove(search)) ||
+      {#if move["C"].toLowerCase().includes(filterMove(search)) ||
          filterMove(move["M"].toLowerCase()).includes(filterMove(search))}
         <Move {move} />
       {/if}
     {/each}
 
-    <!-- Character and move -->
+  <!-- Character and move -->
   {:else}
     {#each moves as move}
       {#if move["C"].toLowerCase().includes(search.split(" ")[0].toLowerCase())}

@@ -35,17 +35,13 @@
     let iframe = document.createElement("iframe")
     iframe.style.width = +bg.offsetWidth + "px"
     iframe.style.height =
-      (bg.offsetWidth / 16) * 9 + 44 /* damn you gfycat banner */ + "px"
+      (bg.offsetWidth / 16) * 9 /* + 44 */ /* damn you gfycat banner */ + "px"
 
-    // div.style.padding = "8px"
-    // div.style.borderRadius = "15px"
-    // div.style.backgroundColor = "#24283b"
-    
-    if (move["G"].includes("gfycat"))
-      iframe.src = move["G"]
-        .replace(".com/", ".com/ifr/")
-        .replace(".gif", "?controls=0?hd=0")
-    else iframe.src = move["G"]
+    if (move["G"].includes("gfycat")) {
+        let ss = move["G"].split('/')
+        let id = ss[ss.length-1].replace(".gif", '')
+        iframe.src = `https://web.archive.org/web/0if_/https://thumbs.gfycat.com/${id}-mobile.mp4`
+    }
 
     // TODO: Make sense of these events
 
@@ -76,18 +72,11 @@
   }
 </script>
 
-<div bind:this={bg} class="move" on:click={showgif} on:keydown>
+<div bind:this={bg} class="move" style="width: 20rem" on:click={showgif} on:keydown>
   <div style="flex: 1">
-    <!-- Can you believe this guy hard-coded all these colors in? What a lazy bum... -->
-    <div style="color: #e0af68;">
-      {move["C"].trim()}
-    </div>
-    <div style="color: #73daca;">
-      Move: {move["M"].trim()}
-    </div>
-    <div style="color: #b4f9f8;">
-      Hits: {move["P"].trim()}
-    </div>
+    <div style="color: #e0af68;">{move["C"].trim()}</div>
+    <div style="color: #73daca;">Move: {move["M"].trim()}</div>
+    <div style="color: #b4f9f8;">Hits: {move["P"].trim()}</div>
     <div style="color: #aafaf8">
       {#if move["T"].length != 0}
         Properties: {move["T"]}
@@ -97,17 +86,9 @@
     </div>
   </div>
   <div style="flex: 1">
-    <div style="color: #bb9af7">
-      Startup: {move["S"].trim()}
-    </div>
-    <div style="color: #f7768e">
-      Block: {move["B"].trim()}
-    </div>
-    <div style="color: #9ece6a">
-      Hit: {move["H"].trim()}
-    </div>
-    <div style="color: #7aa2f7">
-      CH: {move["CH"].trim()}
-    </div>
+    <div style="color: #bb9af7">Startup: {move["S"].trim()}</div>
+    <div style="color: #f7768e">Block: {move["B"].trim()}</div>
+    <div style="color: #9ece6a">Hit: {move["H"].trim()}</div>
+    <div style="color: #7aa2f7">CH: {move["CH"].trim()}</div>
   </div>
 </div>
